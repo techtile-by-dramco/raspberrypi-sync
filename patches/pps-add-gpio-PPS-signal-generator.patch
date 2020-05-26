@@ -1,26 +1,6 @@
-From 4f9ccbb00a2703b661aacbe963a7677b9988715d Mon Sep 17 00:00:00 2001
-From: Luigi Mastandrea <luigi.mastandrea@teamware.it>
-Date: Wed, 7 Jun 2017 11:11:24 +0200
-Subject: [PATCH 1/2] pps: add gpio PPS signal generator
-
-Add PPS signal generator which utilizes a GPIO pin to send PPS signals.
-It relies GPIO framework and hrtimers to control the signal.
-
-GPIO pin can be configured via DT.
-
-Signed-off-by: Andrea Galbusera <gizero@gmail.com>
----
- .../devicetree/bindings/pps/pps-gen-gpio.txt       |  19 ++
- drivers/pps/generators/Kconfig                     |   7 +
- drivers/pps/generators/Makefile                    |   1 +
- drivers/pps/generators/pps_gen_gpio.c              | 274 +++++++++++++++++++++
- 4 files changed, 301 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/pps/pps-gen-gpio.txt
- create mode 100644 drivers/pps/generators/pps_gen_gpio.c
-
 diff --git a/Documentation/devicetree/bindings/pps/pps-gen-gpio.txt b/Documentation/devicetree/bindings/pps/pps-gen-gpio.txt
 new file mode 100644
-index 00000000..5f3c83df
+index 000000000..5f3c83dfb
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/pps/pps-gen-gpio.txt
 @@ -0,0 +1,19 @@
@@ -43,11 +23,64 @@ index 00000000..5f3c83df
 +
 +		assert-falling-edge;
 +	};
+diff --git a/arch/arm/boot/dts/overlays/Makefile b/arch/arm/boot/dts/overlays/Makefile
+index f9e7416a4..5f3308e3c 100644
+--- a/arch/arm/boot/dts/overlays/Makefile
++++ b/arch/arm/boot/dts/overlays/Makefile
+@@ -125,6 +125,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
+ 	pitft28-resistive.dtbo \
+ 	pitft35-resistive.dtbo \
+ 	pps-gpio.dtbo \
++	pps-gen-gpio.dtbo \
+ 	pwm.dtbo \
+ 	pwm-2chan.dtbo \
+ 	pwm-ir-tx.dtbo \
+diff --git a/arch/arm/boot/dts/overlays/pps-gen-gpio-overlay.dts b/arch/arm/boot/dts/overlays/pps-gen-gpio-overlay.dts
+new file mode 100644
+index 000000000..a0f085cf4
+--- /dev/null
++++ b/arch/arm/boot/dts/overlays/pps-gen-gpio-overlay.dts
+@@ -0,0 +1,35 @@
++/dts-v1/;
++/plugin/;
++
++/ {
++	compatible = "brcm,bcm2708";
++	fragment@0 {
++		target-path = "/";
++		__overlay__ {
++			pps_gen: pps_gen {
++				compatible = "pps-gen-gpios";
++                                pps-gen-gpios = <&gpio 18 0>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pps_pins>;
++				status = "okay";
++			};
++		};
++	};
++
++	fragment@1 {
++		target = <&gpio>;
++		__overlay__ {
++			pps_pins: pps_pins {
++				brcm,pins =     <18>;
++				brcm,function = <1>;    // out
++				brcm,pull =     <0>;    // off
++			};
++		};
++	};
++
++	__overrides__ {
++		gpiopin = <&pps_gen>,"gpios:4",
++			  <&pps_pins>,"brcm,pins:0";
++		assert_falling_edge = <&pps_gen>,"assert-falling-edge?";
++	};
++};
 diff --git a/drivers/pps/generators/Kconfig b/drivers/pps/generators/Kconfig
-index e4c4f3dc..7b463f50 100644
+index d615e640f..775e00389 100644
 --- a/drivers/pps/generators/Kconfig
 +++ b/drivers/pps/generators/Kconfig
-@@ -11,3 +11,10 @@ config PPS_GENERATOR_PARPORT
+@@ -12,3 +12,10 @@ config PPS_GENERATOR_PARPORT
  	  If you say yes here you get support for a PPS signal generator which
  	  utilizes STROBE pin of a parallel port to send PPS signals. It uses
  	  parport abstraction layer and hrtimers to precisely control the signal.
@@ -59,10 +92,10 @@ index e4c4f3dc..7b463f50 100644
 +	  utilizes a GPIO pin specified in the Device Tree. It uses hrtimers to
 +	  precisely control the signal.
 diff --git a/drivers/pps/generators/Makefile b/drivers/pps/generators/Makefile
-index 303304a6..77ab1255 100644
+index 2d56dd049..9662a89e5 100644
 --- a/drivers/pps/generators/Makefile
 +++ b/drivers/pps/generators/Makefile
-@@ -3,6 +3,7 @@
+@@ -4,6 +4,7 @@
  #
  
  obj-$(CONFIG_PPS_GENERATOR_PARPORT) += pps_gen_parport.o
@@ -72,7 +105,7 @@ index 303304a6..77ab1255 100644
  EXTRA_CFLAGS += -DDEBUG
 diff --git a/drivers/pps/generators/pps_gen_gpio.c b/drivers/pps/generators/pps_gen_gpio.c
 new file mode 100644
-index 00000000..a1fb7424
+index 000000000..a1fb74241
 --- /dev/null
 +++ b/drivers/pps/generators/pps_gen_gpio.c
 @@ -0,0 +1,274 @@
@@ -350,6 +383,3 @@ index 00000000..a1fb7424
 +MODULE_AUTHOR("Juan Solano <jsm@jsolano.com>");
 +MODULE_DESCRIPTION(DRVDESC);
 +MODULE_LICENSE("GPL");
--- 
-2.11.0
-
