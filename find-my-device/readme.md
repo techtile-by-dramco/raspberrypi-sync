@@ -1,6 +1,6 @@
 # Find my device
 
-Put `find-my-device.py` in `\~/scripts/`.
+Put `find-my-device.py` in `~/scripts/`.
 Put the service file in `/lib/systemd/system/`.
 
 
@@ -13,7 +13,7 @@ sudo systemctl start find-my-device.service
 ```
 
 # Get hostname
-Put `get-hostname.sh` in `\~/scripts/`.
+Put `get-hostname.sh` in `~/scripts/`.
 
 ```sh
 sudo crontab -e
