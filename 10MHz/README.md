@@ -7,10 +7,8 @@ sudo apt install device-tree-compiler
 
 ## Download device tree source file
 ```sh
-wget https://raw.githubusercontent.com/raspberrypi/firmware/master/extra/dt-blob.dtswget https://raw.githubusercontent.com/raspberrypi/firmware/master/extra/dt-blob.dts
+wget https://raw.githubusercontent.com/versatile-by-dramco/raspberrypi-sync/master/10MHz/dt-blob.dts
 ```
-
->> Modify dt-blob.dts to your liking (see our example file -> ctrl+f "MIDAS")
 
 ## Compile device tree source and put resuling device tree blob under /boot
 warnings stating that "node has a unit name, but no reg property" can be ignored
