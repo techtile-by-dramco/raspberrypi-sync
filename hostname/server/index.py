@@ -8,24 +8,25 @@ possible_hostnames = [f"midas-minion-{num:03d}" for num in range(1,150)]
 def get_mac_addr(mac_addr):
     hostname = ""
     with open("/home/pi/mac-hostname-dict.csv","r+") as f:
-         reader = csv.reader(f)
-         table = {}
-         for row in reader:
-            if len(row) > 0:
-                k, v = row
-                table[k] = v
-         if mac_addr in table:
-            hostname = table[mac_addr]
+        # csv header mac,hostname,last-seen
+         df = pd.read_csv(f, sep=';')
+         if mac_addr in df["mac"]:
+            row = df.query(f'mac == "{mac_addr}"')[0]
+            hostname = row["mac"]
+            row["last-seen] = datetime.datetime.utcnow()
          else:
             # search a new hostname
-            occupied_hostnames = list(table.values())
+            occupied_hostnames = df["mac"].tolist()
             for h in possible_hostnames:
                 if h not in occupied_hostnames:
                     hostname = h
+                    df = df.append({
+                        "mac": mac_addr,
+                        "hostname": h,
+                        "last-seen": datetime.datetime.utcnow()
+                    })
                     break
 
-    table[mac_addr]=hostname
     with open("/home/pi/mac-hostname-dict.csv","w+") as f:
-        w = csv.writer(f)
-        w.writerows(table.items())
+        df.to_csv(f, index=False)
     return hostname
