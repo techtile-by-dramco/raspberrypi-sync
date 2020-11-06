@@ -90,10 +90,11 @@ to rollback.
 
 ```bash
 sudo make modules_install
-sudo cp arch/arm64/boot/dts/*.dtb /boot/
+sudo cp /boot/$KERNEL.img /boot/$KERNEL-backup.img
+sudo cp arch/arm64/boot/Image /boot/$KERNEL.img
+sudo cp arch/arm64/boot/dts/broadcom/*.dtb /boot/
 sudo cp arch/arm64/boot/dts/overlays/*.dtb* /boot/overlays/
 sudo cp arch/arm64/boot/dts/overlays/README /boot/overlays/
-sudo cp arch/arm64/boot/zImage /boot/$KERNEL.img
 ```
 
 Enable the ptp4l service so it starts at boot:
