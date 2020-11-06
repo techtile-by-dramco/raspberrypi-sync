@@ -115,7 +115,7 @@ cross-compile instruction
 Apply patch:
 ```bash
 cd ~
-git clone https://github.com/versatile-by-dramco/raspberrypi-ptp.git
+git clone https://github.com/versatile-by-dramco/raspberrypi-sync.git
 cd linux
 git checkout -b pps-generator-patches
 git am ~/raspberrypi-ptp/patches/pps-add-gpio-PPS-signal-generator.patch
