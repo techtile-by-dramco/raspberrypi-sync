@@ -11,6 +11,14 @@ sudo systemctl daemon-reload
 sudo systemctl enable find-my-device.service
 sudo systemctl start find-my-device.service
 ```
+## Send broadcast packet from stdin
+```sh
+socat - UDP4-DATAGRAM:255.255.255.255:37020, broadcast
+```
+## Message format
+`hostname`
+`hostname:start`
+`hostname:stop`
 
 # Get hostname
 Put `get-hostname.sh` in `~/scripts/`.
