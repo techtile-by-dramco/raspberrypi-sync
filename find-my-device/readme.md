@@ -16,8 +16,11 @@ sudo systemctl start find-my-device.service
 socat - UDP4-DATAGRAM:255.255.255.255:37020, broadcast
 ```
 ## Message format
+Blink a couple of times and stop
 `hostname`
+Start blinking:
 `hostname:start`
+Stop blinking:
 `hostname:stop`
 
 # Get hostname
