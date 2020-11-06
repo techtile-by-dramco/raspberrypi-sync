@@ -4,7 +4,7 @@ This guide explains how to enable support for Precision Time Protocol (PTP) to
 a Raspberry Pi 4 running the Raspbian operating system. 
 
 This notes were tested with Raspbian Buster Lite, running kernel
-`5.6.y`. 
+`5.10.y`. 
 
 ## Preliminary operations
 
@@ -47,12 +47,12 @@ In order to build the kernel with required patches and configuration options,
 kernel sources must be fetched and some required build tools must be installed.
 
 ```bash
-git clone --depth=1 --branch rpi-5.6.y https://github.com/raspberrypi/linux
+git clone --depth=1 --branch rpi-5.10.y https://github.com/raspberrypi/linux
 cd linux
 KERNEL=kernel7l
 make bcm2711_defconfig
 # change in .config: CONFIG_LOCALVERSION="-v7l-MIDAS_KERNEL"
-make -j6 zImage modules dtbs
+make -j6 Image modules dtbs
 ```
 
 This will build the kernel in its default configuration and will take a
@@ -81,7 +81,7 @@ It is now possible to build the kernel with the changes we made to support PTP:
 
 ```bash
 make olddefconfig
-make -j6 zImage modules dtbs
+make -j6 Image modules dtbs
 ```
 
 The new kernel image, modules and dtbs must be installed over the current ones.
@@ -90,10 +90,10 @@ to rollback.
 
 ```bash
 sudo make modules_install
-sudo cp arch/arm/boot/dts/*.dtb /boot/
-sudo cp arch/arm/boot/dts/overlays/*.dtb* /boot/overlays/
-sudo cp arch/arm/boot/dts/overlays/README /boot/overlays/
-sudo cp arch/arm/boot/zImage /boot/$KERNEL.img
+sudo cp arch/arm64/boot/dts/*.dtb /boot/
+sudo cp arch/arm64/boot/dts/overlays/*.dtb* /boot/overlays/
+sudo cp arch/arm64/boot/dts/overlays/README /boot/overlays/
+sudo cp arch/arm64/boot/zImage /boot/$KERNEL.img
 ```
 
 Enable the ptp4l service so it starts at boot:
