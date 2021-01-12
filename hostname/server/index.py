@@ -10,6 +10,8 @@ def get_mac_addr(mac_addr):
     with open("/home/pi/mac-hostname-dict.csv","r+") as f:
         # csv header mac,hostname,last-seen
          df = pd.read_csv(f, sep=';')
+         if df.empty:
+             df = pd.DataFrame(columns = ["mac","hostname","last-seen"])
          if mac_addr in df["mac"]:
             row = df.query(f'mac == "{mac_addr}"')[0]
             hostname = row["mac"]
