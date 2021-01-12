@@ -26,7 +26,7 @@ def get_mac_addr(mac_addr):
                         "mac": mac_addr,
                         "hostname": h,
                         "last-seen": datetime.datetime.utcnow()
-                    })
+                    },ignore_index=True)
                     break
 
     with open("/home/pi/mac-hostname-dict.csv","w+") as f:
