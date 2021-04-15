@@ -49,7 +49,7 @@ kernel sources must be fetched and some required build tools must be installed.
 ```bash
 git clone --depth=1 --branch rpi-5.10.y https://github.com/raspberrypi/linux
 cd linux
-KERNEL=kernel7l
+KERNEL=kernel8
 make bcm2711_defconfig
 # change in .config: CONFIG_LOCALVERSION="-v7l-MIDAS_KERNEL"
 make -j6 Image modules dtbs
@@ -127,7 +127,7 @@ echo 'CONFIG_PPS_GENERATOR_GPIO=y' >> .config
 
 Rebuild kernel and install:
 ```bash
-KERNEL=kernel7l
+KERNEL=kernel8
 make bcm2711_defconfig
 make olddefconfig
 make -j6 zImage modules dtbs
