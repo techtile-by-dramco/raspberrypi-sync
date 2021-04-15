@@ -17,9 +17,10 @@ with a git workflow in a separate branch as follow. Run these commands from
 within the linux kernel sources directory.
 
 ```
+wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/master/pps-gen-gpio.patch
+cd linux
 git checkout -b pps-generator-patches
-git am <path-to-this-repo>/patches/0001-pps-add-gpio-PPS-signal-generator.patch
-git am <path-to-this-repo>/patches/0002-add-DT-overlay-for-pps-gen-gpio-generator.patch
+git am ~/pps-gen-gpio.patch
 ```
 
 ### Apply required configuration changes
