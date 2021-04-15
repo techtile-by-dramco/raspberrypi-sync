@@ -1,4 +1,4 @@
-# Create loadable kernel module
+# Create PPS Loadable Kernel Module
 
 ## Install and run rpi-source, to get the correct linux kernel source
 
