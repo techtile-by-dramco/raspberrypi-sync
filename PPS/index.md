@@ -17,7 +17,8 @@ with a git workflow in a separate branch as follow. Run these commands from
 within the linux kernel sources directory.
 
 ```
-wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/master/pps-gen-gpio.patch
+git clone --depth=1 --branch rpi-5.10.y https://github.com/raspberrypi/linux
+wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/master/PPS/patches/pps-gen-gpio.patch
 cd linux
 git checkout -b pps-generator-patches
 git am ~/pps-gen-gpio.patch
