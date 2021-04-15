@@ -1,9 +1,9 @@
 all:
-	make -C /lib/modules/$(shell uname -r)/build M=$(pwd) modules
+	make -j$(nproc) -C /lib/modules/$(shell uname -r)/build M=$(pwd) modules
 
 clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(pwd) clean
+	make -j$(nproc) -C /lib/modules/$(shell uname -r)/build M=$(pwd) clean
 
 modules_install: all
-	$(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules_install
+	$(MAKE) -j$(nproc) -C $(KERNEL_SRC) M=$(SRC) modules_install
 	$(DEPMOD)
