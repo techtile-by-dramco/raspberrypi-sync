@@ -146,7 +146,7 @@ index 000000000..a1fb74241
 +#include <linux/module.h>
 +#include <linux/init.h>
 +#include <linux/platform_device.h>
-+#include <linux/time.h>
++#include <linux/ktime.h>
 +#include <linux/hrtimer.h>
 +#include <linux/gpio.h>
 +#include <linux/of_gpio.h>
