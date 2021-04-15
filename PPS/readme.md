@@ -13,7 +13,7 @@ rpi-source
 ```sh
 mkdir pps_gen_gpio
 cd pps_gen_gpio
-wget 
-wget 
+wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/master/PPS/Makefile
+wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/master/PPS/pps_gen_gpio.c
 make
 ```
