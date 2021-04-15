@@ -1,10 +1,9 @@
-# GPIO based PPS generator for Raspberrypi3
+# GPIO based PPS generator for Raspberrypi 4
 
 This document explains how to add the capability of generating a PPS signal on
-a GPIO pin of Raspberrypi3. It involves tasks similar to those described in
-[README.md](README.md), namely patching configuring and compiling a new kernel
+a GPIO pin of Raspberrypi 4. It involves t patching configuring and compiling a new kernel
 for the Raspberrypi. Hence the thereby described preliminary operations and
-default kernel build procedures are assumed.
+default kernel build procedures are assumed. This is based on the repo of [twteamware](https://github.com/twteamware/raspberrypi-ptp).
 
 Again, refer to the official [kernel building raspberrypi.org
 page](https://www.raspberrypi.org/documentation/linux/kernel/building.md) for
