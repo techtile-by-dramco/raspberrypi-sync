@@ -26,9 +26,9 @@ git am ~/pps-gen-gpio.patch
 ### Apply required configuration changes
 
 The PPS generator driver must be enabled within the kernel configuration.  Here
-`make bcm2709_defconfig` is assumed to be run at least once to bootstrap
+`make bcm2711_defconfig` is assumed to be run at least once to bootstrap
 default configuration. Run these commands from within the linux kernel sources
-directory.
+directory. Please consult the [PTP page](https://github.com/techtile-by-dramco/raspberrypi-sync/PTP).
 
 ```
 echo 'CONFIG_PPS_GENERATOR_GPIO=y' >> .config
@@ -41,9 +41,10 @@ It is now possible to build the kernel with the changes we made:
 ```
 cd linux
 KERNEL=kernel7
-make bcm2709_defconfig
+make bcm2711_defconfig
 make olddefconfig
-make -j4 zImage modules dtbs
+echo 'CONFIG_LOCALVERSION="-v7l-TECHTILE_KERNEL"' >> .config
+make -j6 Image modules dtbs
 ```
 
 The new kernel image, modules and dtbs must be installed over the current ones.
