@@ -386,4 +386,3 @@ index 000000000..ade878277
 +MODULE_AUTHOR("Juan Solano <jsm@jsolano.com>");
 +MODULE_DESCRIPTION(DRVDESC);
 +MODULE_LICENSE("GPL");
-\ No newline at end of file
