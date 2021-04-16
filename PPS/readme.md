@@ -1,12 +1,7 @@
-# Create PPS Loadable Kernel Module
+# Create PPS Loadable Kernel Module (Cross Compile)
 
-## Install and run rpi-source, to get the correct linux kernel source
+## Download source of the used kernel version
 
-```sh
-sudo apt-get install git bc bison flex libssl-dev libncurses5-dev
-sudo wget https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/local/bin/rpi-source && sudo chmod +x /usr/local/bin/rpi-source && /usr/local/bin/rpi-source -q --tag-update
-rpi-source
-```
 
 ## Create a folder with source file
 
@@ -17,3 +12,5 @@ wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/maste
 wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/master/PPS/pps_gen_gpio.c
 make
 ```
+
+## Copy files to RPI
