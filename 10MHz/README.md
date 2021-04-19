@@ -12,6 +12,8 @@ wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/maste
 
 ## Compile device tree source and put resuling device tree blob under /boot
 warnings stating that "node has a unit name, but no reg property" can be ignored
+
+It changes the default pin configuration as documented [here](https://www.raspberrypi.org/documentation/configuration/pin-configuration.md)
 ```sh
 sudo dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob.dts
 ```
