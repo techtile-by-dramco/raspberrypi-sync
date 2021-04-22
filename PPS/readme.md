@@ -15,11 +15,6 @@ wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/maste
 wget https://raw.githubusercontent.com/techtile-by-dramco/raspberrypi-sync/master/PPS/pps_gen_gpio.c
 make
 ```
-## Move the files to the pi
-```sh
-scp pps_gen_gpio/ pi@techtile-pi.local:~/pps_gen_gpio
-```
-
 
 ## Create device tree overlay on th RPI
 
@@ -30,7 +25,8 @@ sudo cp pps-gen-gpio.dtbo /boot/overlays/
 ```
 Add the new overlay to the config 
 ```sh
-sudo echo "dtoverlay=pps-gen-gpio" >> /boot/config.txt
+sudo echo 
+sudo bash -c 'echo "dtoverlay=pps-gen-gpio" >> /boot/config.txt'
 ```
 
 Reboot your pi
@@ -49,4 +45,16 @@ dtc -I fs /proc/device-tree
 sudo insmod pps_gen_gpio.ko
 lsmod # should show the new module
 dmesg # should show some info about the module
+```
+
+# Install the kernel module
+```sh
+sudo cp ~/pps_gen_gpio/pps_gen_gpio.ko /lib/modules/$(uname -r)/kernel/drivers/pps/
+sudo bash -c 'echo "pps_gen_gpio" >> /etc/modules-load.d/pps_gen_gpio.conf'
+sudo depmod
+```
+
+Reboot your pi
+```sh
+sudo reboot
 ```
