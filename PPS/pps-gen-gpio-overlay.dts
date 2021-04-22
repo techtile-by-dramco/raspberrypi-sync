@@ -20,7 +20,7 @@
                        pps_pins: pps_pins {
                                brcm,pins =     <17>;
                                brcm,function = <1>;    // out
-                               brcm,pull =     <0>;    // off
+                               brcm,pull =     <1>;    // on
                        };
                };
        };
