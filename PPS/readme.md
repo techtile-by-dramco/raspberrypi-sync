@@ -2,12 +2,14 @@
 
 ## Install required packages and kernel headers
 ```sh
+sudo apt update && sudo apt upgrade
 sudo apt install git bc bison flex libssl-dev make raspberrypi-kernel-headers
 ```
 
 
 ## Create a folder with source file
-
+If you get a missing sperator error during make, than probably the tab below all: is converted to spaces.
+Remove the spaces and insert one tab.
 ```sh
 mkdir pps_gen_gpio
 cd pps_gen_gpio
@@ -25,7 +27,6 @@ sudo cp pps-gen-gpio.dtbo /boot/overlays/
 ```
 Add the new overlay to the config 
 ```sh
-sudo echo 
 sudo bash -c 'echo "dtoverlay=pps-gen-gpio" >> /boot/config.txt'
 ```
 
