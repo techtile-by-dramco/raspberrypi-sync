@@ -1,6 +1,9 @@
-# Create PPS Loadable Kernel Module (Cross Compile)
+# Create PPS Loadable Kernel Module
 
-## Download source of the used kernel version
+## Install required packages and kernel headers
+```sh
+sudo apt install git bc bison flex libssl-dev make raspberrypi-kernel-headers
+```
 
 
 ## Create a folder with source file
