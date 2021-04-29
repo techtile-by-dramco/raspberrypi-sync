@@ -10,7 +10,7 @@
                startup_state = "inactive";
                function = "input";
             }; // pin
-			pin@p4 { function = "gp_clk"; termination = "pull_down"; startup_state = "active"; }; // MIDAS 10 MHz refclock pin
+			pin@p4 { function = "gp_clk"; termination = "pull_down"; startup_state = "active"; }; // USRP 10 MHz refclock pin
             pin@p14 { function = "uart0";  termination = "no_pulling"; drive_strength_mA = < 8 >; }; // TX uart0
             pin@p15 { function = "uart0";  termination = "pull_up"; drive_strength_mA = < 8 >; }; // RX uart0
             pin@p34 { function = "input";  termination = "pull_up";    drive_strength_mA = < 8 >; };
@@ -36,7 +36,7 @@
          }; // pin_config
 
          pin_defines {
-			pin_define@MIDAS_10_MHZ{
+			pin_define@USRP_10_MHZ {
                type = "external";
 			   number = <4>;
             };
@@ -168,16 +168,25 @@
                type = "internal";
                number = <45>;
             };
-         }; // pin_defines
-      }; // pins
-      // MIDAS: 10 MHz clock on GPCLK0
-      clock_routing {
-	    chan@DPER { div  = <4>; };
-		clock@GPCLK0 { pll = "PLLD"; chan = "DPER"; };
-      };
-
-      clock_setup {
+        }; // pin_defines
+    }; // pins
+    
+	// USRP: 10 MHz clock on GPCLK0
+	clock_routing {
+		vco@PLLA {
+			freq = <1920000000>;
+		};
+		chan@APER {
+			div = <4>;
+		};
+		clock@GPCLK0 {
+			pll = "PLLA";
+			chan = "APER";
+		};
+	};
+	
+	clock_setup {
         clock@GPCLK0 { freq = <10000000>; };
-      };
-   };
+    };
+  };
 };
