@@ -174,7 +174,7 @@
 	// USRP: 10 MHz clock on GPCLK0
 	clock_routing {
 		vco@PLLA {
-			freq = <1920000000>;
+			freq = <1080000000>;
 		};
 		chan@APER {
 			div = <4>;
