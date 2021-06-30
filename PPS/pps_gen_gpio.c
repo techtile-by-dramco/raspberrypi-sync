@@ -126,7 +126,7 @@ done:
                hrtimer_error = (3 * hrtimer_error + delta) >> 2;
 
        /* update the hrtimer expire time */
-       hrtimer_get_softexpires_tv64(timer,
+       hrtimer_set_expires(timer,
                            ktime_set(expire_time.tv_sec + 1,
                                      NSEC_PER_SEC - (send_delay +
                                      devdata->port_write_time +
