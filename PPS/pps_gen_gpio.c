@@ -49,7 +49,7 @@ struct pps_gen_gpio_devdata {
 };
 
 /* calibrated time between a hrtimer event and the reaction */
-static long hrtimer_error = SAFETY_INTERVAL;
+static unsigned long hrtimer_error = SAFETY_INTERVAL;
 
 /* the kernel hrtimer event */
 static enum hrtimer_restart hrtimer_event(struct hrtimer *timer)
