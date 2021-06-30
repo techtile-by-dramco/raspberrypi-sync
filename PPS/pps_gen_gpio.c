@@ -89,8 +89,8 @@ static enum hrtimer_restart hrtimer_event(struct hrtimer *timer)
                ktime_get_real_ts64(&ts2);
        } while (expire_time.tv_sec == ts2.tv_sec && ts2.tv_nsec < lim);
 
-       /* set the signal */
-       gpiod_set_value(devdata->pps_gpio, 1);
+       /* set the signal (0 bcs invertor used)*/
+       gpiod_set_value(devdata->pps_gpio, 0);
 
        /* busy loop until the time is right for a clear edge */
        lim = NSEC_PER_SEC - devdata->port_write_time;
@@ -98,8 +98,8 @@ static enum hrtimer_restart hrtimer_event(struct hrtimer *timer)
                ktime_get_real_ts64(&ts2);
        } while (expire_time.tv_sec == ts2.tv_sec && ts2.tv_nsec < lim);
 
-       /* unset the signal */
-       gpiod_set_value(devdata->pps_gpio, 0);
+       /* unset the signal (1 bcs invertor used)*/
+       gpiod_set_value(devdata->pps_gpio, 1);
 
        ktime_get_real_ts64(&ts3);
 
